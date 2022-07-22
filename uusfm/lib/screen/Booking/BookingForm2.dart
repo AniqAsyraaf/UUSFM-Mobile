@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uusfm/animation/fadeanimation.dart';
+import 'package:uusfm/model/bookingmodel.dart';
 import 'package:uusfm/model/sessionmodel.dart';
 import 'package:uusfm/viewmodel/bookingviewmodel.dart';
 import 'package:uusfm/viewmodel/membershipviewmodel.dart';
@@ -68,14 +69,17 @@ class _BookingForm2State extends State<BookingForm2> {
       print(res);
       // print(phoneNum.text.trim());
       if (res == "available") {
+        BookingModel booking = new BookingModel();
+
+        booking.cId = widget._userViewmodel.user.id;
+        booking.cName = cName.text.trim();
+        booking.sessionType = sessionType.text.trim();
+        booking.sessionId = widget._Sessionmodel.id;
+        booking.bookDate = DateTime.parse(bookDate.text.trim());
+        booking.bookTime = bookTime.text.trim();
+        booking.phoneNum = phoneNum.text.trim();
         String res = await _bookingviewmodel.StoreBooking(
-          widget._userViewmodel.user.id,
-          cName.text.trim(),
-          sessionType.text.trim(),
-          widget._Sessionmodel.id,
-          bookDate.text.trim(),
-          bookTime.text.trim(),
-          phoneNum.text.trim(),
+          booking,
           fileName,
         );
         print(res);

@@ -9,41 +9,22 @@ import 'package:http/http.dart' as http;
 
 import '../model/user.dart';
 
+var IPAddress = "68.183.185.251";
+
 class Bookingviewmodel extends Viewmodel {
   Future<String> StoreBooking(
-      String cID,
-      String cName,
-      String sessionType,
-      String sessionID,
-      String bookDate,
-      String bookTime,
-      String phoneNum,
-      String bookingReceipt) async {
-    //print(bookingReceipt);
-    // var url = Uri.parse(
-    //     "http://" + GlobalVariables.IPAddress + "/MobileAPI/storeBooking.php?");
-
-    // var request = await http.MultipartRequest('POST', url);
-    // request.fields['cID'] = cID;
-    // request.fields['cName'] = cName;
-    // request.fields['sessionType'] = sessionType;
-    // request.fields['sessionID'] = sessionID;
-    // request.fields['bookDate'] = bookDate;
-    // request.fields['bookTime'] = bookTime;
-    // request.fields['phoneNum'] = phoneNum;
-
-    var url =
-        "http://" + GlobalVariables.IPAddress + "/MobileAPI/storeBooking.php?";
+      BookingModel booking, String bookingReceipt) async {
+    var url = "http://" + IPAddress + "/MobileAPI/storeBooking.php?";
 
     var result = await http.post(Uri.parse(url),
         body: jsonEncode(<String, String>{
-          'cID': cID,
-          'cName': cName,
-          'sessionType': sessionType,
-          'sessionID': sessionID,
-          'bookDate': bookDate,
-          'bookTime': bookTime,
-          'phoneNum': phoneNum,
+          'cID': booking.cId,
+          'cName': booking.cName,
+          'sessionType': booking.sessionType,
+          'sessionID': booking.sessionId,
+          'bookDate': booking.bookDate.toString(),
+          'bookTime': booking.bookTime,
+          'phoneNum': booking.phoneNum,
           'bookingReceipt': bookingReceipt,
         }));
     print(result.body);
